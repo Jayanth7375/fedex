@@ -220,7 +220,7 @@ class BREService {
             }
         }
         console.log(`[BRE] Auto-assigned ${assignments.length} cases with agent details.`);
-        
+
         return assignments; // CHANGED: Return assignments array
     }
 
@@ -279,7 +279,7 @@ class BREService {
                     userId: null,
                     details: `AI assigned to agent ${bestAgent.name} (${bestAgent.email}) - Load: ${minLoad}, Region: ${kase.region}`
                 });
-                
+
                 console.log(`[BRE] Assigned Case ${kase.caseId} to Agent ${bestAgent.name} (${bestAgent.email})`);
 
                 // CHANGED: Return agent details

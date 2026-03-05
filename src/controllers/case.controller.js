@@ -235,7 +235,7 @@ const getPersonHistory = async (req, res) => {
 // @access  Private/Admin/Manager
 const createCase = async (req, res) => {
     try {
-        const { customerName, amount, slaDeadline, priorityScore, customerId } = req.body;
+        const { customerName, amount, slaDeadline, priorityScore, customerId, region } = req.body;
 
         // Simple ID generation
         const dateStr = new Date().toISOString().slice(0, 10).replace(/-/g, '');
@@ -252,6 +252,7 @@ const createCase = async (req, res) => {
             amount,
             slaDeadline,
             priorityScore: priorityScore || 0.5,
+            region: region || 'CENTRAL', // Default to CENTRAL if not provided
             status: 'OPEN',
             activityLogs: [],
             notes: [],
@@ -268,6 +269,12 @@ const createCase = async (req, res) => {
 
         // Trigger Initial AI Scoring
         await AIService.runScoring(kase);
+
+        // 3. IMMEDIATE Auto-Assignment
+        const DCAAssignmentService = require('../services/DCAAssignmentService');
+        await DCAAssignmentService.assignDCA(kase);
+
+        console.log(`[Case] Manual Case ${kase.caseId} created and Auto-Assignment attempted.`);
 
         res.status(201).json(kase);
     } catch (error) {

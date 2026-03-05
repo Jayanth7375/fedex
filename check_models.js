@@ -1,7 +1,8 @@
 const https = require('https');
 const fs = require('fs');
 
-const API_KEY = "AIzaSyD-2ZySfzPsuvtkk50EePtxlhtQZyiA7UI";
+require('dotenv').config();
+const API_KEY = process.env.GOOGLE_API_KEY;
 
 const options = {
     hostname: 'generativelanguage.googleapis.com',

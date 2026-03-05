@@ -1,7 +1,7 @@
 const https = require('https');
 
 // Securely use the Google API Key on the server side
-const API_KEY = "AIzaSyD-2ZySfzPsuvtkk50EePtxlhtQZyiA7UI";
+const API_KEY = process.env.GOOGLE_API_KEY;
 
 exports.sendMessage = async (req, res) => {
     try {
